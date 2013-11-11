@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ================================================ -->
+<!--  com.gmail.dengtao.joe.transport's buildfile     -->
+<!-- ================================================ -->
+<project name="com.gmail.dengtao.joe.transport" basedir="." default="main" >
+
+	<description>com.gmail.dengtao.joe.transport</description>
+
+	<property name="src.dir" 		value="src" />
+	<property name="build.dir" 		value="build" />
+	<property name="build.lib.dir" 	value="lib" />
+	<property name="lib.dir" 		value="lib" />
+	<property name="res.dir" 		value="res" />
+	<property name="classes.dir"	value="${build.dir}/cache" />
+	<property name="jar.dir" 		value="${build.dir}" />
+	<property name="version"		value="1.0.0" />
+	<property name="encoding" 		value="UTF-8" />
+	<property name="antlib.dir" 	value="ant-lib" />
+
+	<target name="main" depends="clean, preapare, compile, jar, cleanUp" description="">
+		<echo>Ok!</echo>
+	</target>
+
+	<!-- - - - - - - - - - - - - - -->
+	<!--  target: clean             -->
+	<!-- - - - - - - - - - - - - - -->
+	<target name="clean" description="clean">
+		<echo>Clean...</echo>
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="preapare" depends="clean" description="preapare">
+		<echo>Preapare...</echo>
+		<mkdir dir="${classes.dir}" description="class" />
+		<mkdir dir="${jar.dir}" description="jar dir" />
+	</target>
+
+	<target name="compile" depends="preapare" description="compile">
+		<echo>Compile</echo>
+		<javac 
+			srcdir="${src.dir}" 
+			destdir="${classes.dir}" 
+			includeantruntime="false" 
+			source="1.6" 
+			target="1.6"
+			debug="true"
+			compiler="org.eclipse.jdt.core.JDTCompilerAdapter">
+			<compilerarg line="-encoding ${encoding}" />
+			<compilerclasspath>
+				<pathelement path="${antlib.dir}/ecj.jar"/>
+			</compilerclasspath>
+		</javac>
+	</target>
+
+	<target name="jar" description="jar">
+		<echo>jar...</echo>
+		<jar destfile="${jar.dir}/${ant.project.name}-${version}.jar" basedir="${classes.dir}"/>
+	</target>
+	
+	<target name="cleanUp" description="cleanUp">
+		<echo>CleanUp...</echo>
+		<delete dir="${classes.dir}" />
+	</target>
+	
+</project>
